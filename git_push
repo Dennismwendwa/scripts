@@ -1,4 +1,4 @@
-
+#!/usr/bin/env bash
 # This script automates the process of pushing to Github
 
 # check if git is installed
