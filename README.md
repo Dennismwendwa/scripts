@@ -7,11 +7,11 @@ NOTE: Ensure you give the any script permission when you crone it into
 	  move them to your system PATH. Use command: mv "script-name" ~/.local/bin
 
 
-Script: 1
+Script: 1. venv
 >>> This script is for creating python "virtual environment" for your projects.
 >>> It usus python3 builtin "venv" module. if You dont have it you mayneed to
 >>> install it first using pip.
 
 
-Script: 2
+Script: 2. git_push
 >>> This script is for pushing files to Github.
