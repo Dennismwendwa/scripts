@@ -15,3 +15,4 @@ Script: 1. venv
 
 Script: 2. git_push
 >>> This script is for pushing files to Github.
+>>> When running the script supply branch name or it will default to main branch
