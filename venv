@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This script creates python env
+
+# check if Python3 is installed
+if ! command -v python3 &> /dev/null; then
+    echo "Python 3 is not installed. Please install Python 3 and try again."
+    exit 1
+fi
+
+# get the desired virtual environment name from user input
+read -p "Enter the name of the virtual environment: " venv_name
+
+# create the virtual environment
+python3 -m venv "$venv_name"
+
+echo "Virtual environment '$venv_name' created successfully."
