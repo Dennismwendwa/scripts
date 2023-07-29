@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# This is script to backup yours files
+
+# the directory you want to back up
+SOURCE_DIR="/home/dennis/projects"
+
+# backup destination derectory
+BACKUP_DIR="/home/dennis/backups/projects"
+
+# number of old backups to retain
+RETENTION_COUNT=2
+
+# function for backups
+perform_backup()
+{
+	# create a timestamp to use for the backup folder names
+	TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+
+	# create the backup directory if its not created
+	mkdir -p "$BACKUP_DIR"
+
+	# using rsync to perform buckup (incremental)
+	rsync -av --delete "$SOURCE_DIR/" "$BACKUP_DIR/backup_$TIMESTAMP/"
+
+	# compressing the backup folder using tar
+	tar -czf "$BACKUP_DIR/backup_$TIMESTAMP.tar.gz" -C "$BACKUP_DIR" "backup_$TIMESTAMP/"
+
+	# delete the uncompreesed backup folder
+	rm -rf "$BACKUP_DIR/backup_$TIMESTAMP"
+
+}
+
+# function to rotate old backups
+rotate_backups()
+{
+	# getting list of all backup folders
+	backup_folders=("$BACKUP_DIR"/backup_*)
+
+	backups_to_delete=$(( ${#backup_folders[@]} - RETENTION_COUNT ))
+
+	for (( i=0; i<$backups_to_delete; i++ )); do
+		rm -rf "${backup_folders[$i]}"
+	done
+}
+
+# main script logic
+echo "Performing backup of $SOURCE_DIR to $BACKUP_DIR"
+perform_backup
+
+echo "Rotating old backups to maintain a retention count of $RETENTION_COUNT"
+rotate_backups
+
+echo "Backup completed successfully!"
